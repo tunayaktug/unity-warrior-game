@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class PlayerCombat : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Camera cam;
-
+    public Animator animator;
     public float attackRange = 2f;
     public int damage = 10;
     public float attackCooldown = 1f;
@@ -30,6 +32,7 @@ public class PlayerCombat : MonoBehaviour
 
     void HandleInput()
     {
+
         if (Input.GetMouseButtonDown(1)) 
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -42,17 +45,46 @@ public class PlayerCombat : MonoBehaviour
 
                 if (metin != null)
                 {
+
                     currentTarget = metin;
+                    AttackAnimation();
                     agent.SetDestination(metin.transform.position);
                 }
                 else
                 {
                     currentTarget = null;
+                    AttackAnimation();
                     agent.SetDestination(hit.point);
                 }
             }
         }
     }
+
+    void AttackAnimation()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                MetinTasiBase metin = hit.collider.GetComponent<MetinTasiBase>();
+
+
+                if (metin != null)
+                {
+                    animator.SetBool("Attack", true);
+
+                }
+                else
+                {
+                    animator.SetBool("Attack", false);
+                }
+            }
+        }
+    }
+
 
     void HandleAttack()
     {
