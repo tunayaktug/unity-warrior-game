@@ -395,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c9a3a3c655c054a824c6779a90f272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 960853519}
   attackRange: 2
   damage: 50
   attackCooldown: 1
